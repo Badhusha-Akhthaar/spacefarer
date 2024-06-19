@@ -4,14 +4,14 @@ using { com.badhusha.aldiproject as sf } from '../db/schema';
 service SpacefarerService {
 
     entity Spacefarer @(restrict: [
-        { grant: ['READ'],   to: 'authenticated-user' },
-        { grant: ['UPDATE','CREATE','DELETE'],   to: 'admin' }
+        { grant: ['READ'],   to: 'authenticated-user', where: 'email = $user or email = badhusha.s@outlook.com' },
+        { grant: '*',   to: 'admin' }
     ])as projection on sf.Spacefarer;
     annotate Spacefarer with @odata.draft.enabled;
     
 
     entity InterGalacticDepartment as projection on sf.InterGalacticDepartment;
-    annotate InterGalacticDepartment with @odata.draft.enabled;
+    // annotate InterGalacticDepartment with @odata.draft.enabled;
 
     entity Role as projection on sf.Role;
     annotate Role with @odata.draft.enabled;

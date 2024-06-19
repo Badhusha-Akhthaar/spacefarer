@@ -5,14 +5,10 @@ annotate service.Spacefarer with @(
     Capabilities.Deletable: true
 );
 
-annotate service.Stardust with @(
+annotate service.InterGalacticDepartment with @(
     Capabilities.Insertable: true,
-    Capabilities.Deletable: true
-);
-
-annotate service.NavigationSkill with @(
-    Capabilities.Insertable: true,
-    Capabilities.Deletable: true
+    Capabilities.Deletable: true,
+    Capabilities.Updatable: false
 );
 
 
@@ -46,18 +42,11 @@ annotate service.Spacefarer with @(
     ]
 );
 
-annotate service.Stardust with @(UI.LineItem #Stardust: [
-    {
-        $Type            : 'UI.DataField',
-        Value            : name,
-        ![@UI.Importance]: #High,
-    }
-]);
 
-annotate service.Stardust with @(
+annotate service.NavigationSkill with @(
     UI.HeaderInfo : {
-        TypeName      : 'Stardust',
-        TypeNamePlural: 'Startdusts',
+        TypeName      : 'Navigation Skill',
+        TypeNamePlural: 'Navigation Skills',
         Title         : {
             $Type: 'UI.DataField',
             Value: ID
@@ -123,13 +112,62 @@ annotate service.Spacefarer with @(
         },
         {
             $Type : 'UI.ReferenceFacet',
-            ID : 'StardustFacet',
+            Label : 'Intergalactic Departments',
+            ID : 'IntergalacticDepartments',
+            Target : 'intergalactic_dept_roles/@UI.LineItem#IntergalacticDepartments',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
             Label : 'Stardusts',
-            Target : 'stardusts/@UI.LineItem#Stardust',
+            ID : 'Stardusts',
+            Target : 'stardusts/@UI.LineItem#Stardusts',
         }
     ]
 );
 
+annotate service.Spacefarer with @(
+    UI.FieldGroup #AdditionalInfo : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : navigation_skill.name,
+                Label : 'name',
+            },],
+    }
+);
+annotate service.Spacefarer with @(
+    UI.FieldGroup #AdditionalInfo1 : {
+        $Type : 'UI.FieldGroupType',
+        Data : [],
+    }
+);
+annotate service.InterGalacticDepartment with @(
+    UI.LineItem #IntergalacticDepartments : [
+        {
+            $Type : 'UI.DataField',
+            Value : role,
+            Label : 'Role',
+        },{
+            $Type : 'UI.DataField',
+            Value : department_name,
+            Label : 'Department Name',
+        },]
+);
+annotate service.Stardust with @(
+    UI.LineItem #Stardusts : [
+        {
+            $Type : 'UI.DataField',
+            Value : name,
+        },]
+);
+// annotate service.Stardust with @(
+//     UI.LineItem #Stardusts : [
+//         {
+//             $Type : 'UI.DataField',
+//             Value : name,
+//         },]
+// );
 // annotate service.Spacefarer with @(
 //     UI.FieldGroup #GeneratedGroup : {
 //         $Type : 'UI.FieldGroupType',

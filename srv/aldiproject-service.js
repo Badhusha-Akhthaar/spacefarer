@@ -1,12 +1,52 @@
 const cds = require("@sap/cds");
+const nodemailer = require("nodemailer");
 
 module.exports = cds.service.impl(async function (srv) {
-    const { Spacefarer,Stardust, Planet } = this.entities;
+    const { Spacefarer, Stardust, InterGalacticDepartment, Planet } = this.entities;
 
-    // srv.before('CREATE', Attachments, async (req) => {
-    //     console.log("Creating File");
-    //     req.data.url = `/service/incidents/Attachments(${req.data.ID})/data`
-    // })
+    srv.before('UPDATE', Spacefarer, async (req) => {
+        if (req.data.intergalactic_dept_roles) {
+            for (let i = 0; i < req.data.intergalactic_dept_roles.length; i++) {
+                req.data.intergalactic_dept_roles[i].department_name = `DEPT-${req.data.intergalactic_dept_roles[i].department_name}`;
+                req.data.intergalactic_dept_roles[i].role = `ROLE-${req.data.intergalactic_dept_roles[i].role}`
+            }
+        }
+    })
+    srv.before('CREATE', Spacefarer, async (req) => {
+        if (req.data.intergalactic_dept_roles) {
+            for (let i = 0; i < req.data.intergalactic_dept_roles.length; i++) {
+                if(req.data.intergalactic_dept_roles[i].department_name.startsWith("DEPT-") || req.data.intergalactic_dept_roles[i].role.startsWith("ROLE-")){
+                    throw Error("Department name & Role should not start with DEPT or ROLE respectively");
+                }
+                req.data.intergalactic_dept_roles[i].department_name = `DEPT-${req.data.intergalactic_dept_roles[i].department_name}`;
+                req.data.intergalactic_dept_roles[i].role = `ROLE-${req.data.intergalactic_dept_roles[i].role}`
+            }
+        }
+
+    })
+
+    srv.after('CREATE',Spacefarer, async (result)=>{
+        let { email } = result
+        console.log(email)
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            auth: {
+                user: 'christine.jacobi71@ethereal.email',
+                pass: 'YQN9HXYsBYWq6JSx4E'
+            }
+        });
+
+        const info = await transporter.sendMail({
+            from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
+            to: "akhthaaralibadhusha@gmail.com", // list of receivers
+            subject: "Hello ✔", // Subject line
+            text: "Hello world?", // plain text body
+            html: "<b>Hello world?</b>", // html body
+          });
+        
+        console.log("Message sent: %s", info.messageId);
+    })
     // srv.before('CREATE', Incidents, async (req) => {
     //     console.log(req)
     //     req.data.number = Math.random().toString().slice(2, 12);
@@ -39,11 +79,11 @@ module.exports = cds.service.impl(async function (srv) {
 
     // })
 
-    srv.on('CREATE',Stardust,async (req,next)=>{
+    srv.on('CREATE', Stardust, async (req, next) => {
         console.log("*********************CREATE************")
         return next();
     });
-    srv.on('NEW',Stardust,async (req,next)=>{
+    srv.on('NEW', Stardust, async (req, next) => {
         console.log("*********************NEW************")
         return next();
     });

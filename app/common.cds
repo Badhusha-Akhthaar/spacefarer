@@ -10,7 +10,7 @@ annotate sf.Spacefarer with {
 };
 
 annotate sf.Stardust with {
-    ID @UI.Hidden;
+    //ID @UI.Hidden;
     name @title : 'Stardust Name';
 };
 

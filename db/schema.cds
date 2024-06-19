@@ -8,7 +8,7 @@ entity Spacefarer : cuid,managed {
     user_locked: Boolean;
     origin_planet: String(20);
     spacesuit_color: String(10);
-    intergalactic_dept: Association to InterGalacticDepartment;
+    intergalactic_dept_roles: Composition of many InterGalacticDepartment on intergalactic_dept_roles.sf = $self;
     stardusts: Composition of many Stardust on stardusts.spacefarer = $self;
     navigation_skill: Association to NavigationSkill
 }
@@ -22,9 +22,10 @@ entity NavigationSkill : cuid,managed {
     name: String(25);
 }
 
-entity InterGalacticDepartment : cuid {
-    name: String(20);
-    roles: Association to many Role on roles.department = $self
+entity InterGalacticDepartment : cuid,managed {
+    department_name: String(20);
+    role: String(20);
+    sf: Association to Spacefarer;
 }
 
 entity Role: cuid {
@@ -36,6 +37,7 @@ entity Role: cuid {
 
 @cds.persistence.skip
 @readonly
+@cds.odata.valuelist
 entity Planet {
     id: String(20);
     name: String(20);
