@@ -8,7 +8,7 @@ annotate service.Spacefarer with @(
 annotate service.InterGalacticDepartment with @(
     Capabilities.Insertable: true,
     Capabilities.Deletable: true,
-    Capabilities.Updatable: false
+    Capabilities.Updatable: true
 );
 
 

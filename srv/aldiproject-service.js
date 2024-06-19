@@ -4,14 +4,14 @@ const nodemailer = require("nodemailer");
 module.exports = cds.service.impl(async function (srv) {
     const { Spacefarer, Stardust, InterGalacticDepartment, Planet } = this.entities;
 
-    srv.before('UPDATE', Spacefarer, async (req) => {
-        if (req.data.intergalactic_dept_roles) {
-            for (let i = 0; i < req.data.intergalactic_dept_roles.length; i++) {
-                req.data.intergalactic_dept_roles[i].department_name = `DEPT-${req.data.intergalactic_dept_roles[i].department_name}`;
-                req.data.intergalactic_dept_roles[i].role = `ROLE-${req.data.intergalactic_dept_roles[i].role}`
-            }
-        }
-    })
+    // srv.before('UPDATE', Spacefarer, async (req) => {
+    //     if (req.data.intergalactic_dept_roles) {
+    //         for (let i = 0; i < req.data.intergalactic_dept_roles.length; i++) {
+    //             req.data.intergalactic_dept_roles[i].department_name = `DEPT-${req.data.intergalactic_dept_roles[i].department_name}`;
+    //             req.data.intergalactic_dept_roles[i].role = `ROLE-${req.data.intergalactic_dept_roles[i].role}`
+    //         }
+    //     }
+    // })
     srv.before('CREATE', Spacefarer, async (req) => {
         if (req.data.intergalactic_dept_roles) {
             for (let i = 0; i < req.data.intergalactic_dept_roles.length; i++) {
