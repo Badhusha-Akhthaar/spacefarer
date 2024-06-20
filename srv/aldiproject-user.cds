@@ -1,17 +1,13 @@
 using {com.badhusha.aldiproject as sf} from '../db/schema';
 
-@path: '/service/aldiproject'
-service SpacefarerService {
+@path: '/service/aldiproject-user'
+service SpacefarerServiceUser {
 
     entity Spacefarer @(restrict: [
         {
             grant: ['READ'],
             to   : 'authenticated-user',
             where: 'email = $user'
-        },
-        {
-            grant: '*',
-            to   : 'admin'
         }
     ]) as projection on sf.Spacefarer;
 

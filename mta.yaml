@@ -70,9 +70,23 @@ modules:
       - combadhushaaldiprojectui.zip
       name: combadhushaaldiprojectui
       target-path: resources/
+    - artifacts:
+      - combadhushaaldiprojectuserui.zip
+      name: combadhushaaldiprojectuserui
+      target-path: resources/
 - name: combadhushaaldiprojectui
   type: html5
   path: app/aldiprojectui
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: combadhushaaldiprojectuserui
+  type: html5
+  path: app/aldiprojectuserui
   build-parameters:
     build-result: dist
     builder: custom

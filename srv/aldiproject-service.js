@@ -38,7 +38,7 @@ module.exports = cds.service.impl(async function (srv) {
         });
 
         const info = await transporter.sendMail({
-            from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
+            from: 'badhusha.s@outlook.com', // sender address
             to: "akhthaaralibadhusha@gmail.com", // list of receivers
             subject: "Hello ✔", // Subject line
             text: "Hello world?", // plain text body
